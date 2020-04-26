@@ -1,0 +1,24 @@
+# this is external service : load balancer
+
+apiVersion: v1
+kind: Service
+metadata:
+  name: voting-app-service
+  labels:
+    name: voting-app-service
+    app: demo-voting-app
+
+spec:
+  #by default services are created as type: clusterId
+  # these are avl only with in the cluster. To enable the service outside the cluster
+  # change the type of service to Load Balancer
+  type: LoadBalancer
+  ports:
+    - targetPort: 80
+      port: 80
+
+      #we need to link the service to the one of the 5 pods for that we use selector and use diff filter ex: labels
+
+  selector:
+    name: voting-app-pod
+    app: demo-voting-app
